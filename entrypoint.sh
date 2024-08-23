@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 detekt_formatting="/opt/detekt-formatting.jar"
 
@@ -44,8 +44,14 @@ if [ -n "$DETEKT_INPUT" ]; then
     detekt_command+="--input ${DETEKT_INPUT} "
 fi
 
+REVIEWDOG_FAIL_LEVEL_PARAMETER=""
+if [ -n "$INPUT_REVIEWDOG_FAIL_LEVEL" ]; then
+  REVIEWDOG_FAIL_LEVEL_PARAMETER="-fail-level=${INPUT_REVIEWDOG_FAIL_LEVEL}"
+fi
+
 echo "$detekt_command"
 eval "$detekt_command"
 
 reviewdog -f=checkstyle -name="detekt" -reporter="${INPUT_REVIEWDOG_REPORTER}" \
-  -level="${INPUT_REVIEWDOG_LEVEL}" -filter-mode="${INPUT_REVIEWDOG_FILTER}" <detekt_report.xml
+  -level="${INPUT_REVIEWDOG_LEVEL}" -filter-mode="${INPUT_REVIEWDOG_FILTER}" \
+  ${REVIEWDOG_FAIL_LEVEL_PARAMETER} <detekt_report.xml

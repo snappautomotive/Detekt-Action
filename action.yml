@@ -20,6 +20,11 @@ inputs:
       Default is github-pr-check.
     required: false
     default: 'github-pr-check'
+  reviewdog_fail_level:
+    description: |
+      Cause the main job to fail if there is a detekt issue of this level or higher.
+    required: false
+    default: 'none'
   detekt_config:
     description: 'yml detekt config'
     required: false
@@ -67,6 +72,7 @@ runs:
     - ${{ inputs.reviewdog_level }}
     - ${{ inputs.reviewdog_filter }}
     - ${{ inputs.reviewdog_reporter }}
+    - ${{ inputs.reviewdog_fail_level }}
     - ${{ inputs.detekt_config }}
     - ${{ inputs.detekt_excludes }}
     - ${{ inputs.fail_on_error }}
