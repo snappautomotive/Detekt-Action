@@ -1,4 +1,4 @@
-FROM alpine:3.13.1
+FROM alpine:3
 
 # https://github.com/detekt/detekt/releases
 ARG DETEKT_VERSION="1.23.6"
